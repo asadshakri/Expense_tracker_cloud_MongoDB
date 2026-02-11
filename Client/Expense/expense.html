@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <div style="display: flex;">
+  
+    <div class="d-inline-flex">
+        <!-- Sidebar -->
+        <nav class="navbar navbar-dark bg-dark align-items-start flex-column p-3" style="min-height: 100vh; width: 250px;">
+          <a class="navbar-brand fw-bold mb-4 fs-4 text-white" href="#">💰 Expense Tracker</a>
+          <div class="mb-3">
+            <h3 class="text-white mb-1">Welcome!</h3>
+            <p id="premiumStatus" style="display: none; color: aliceblue; font-size: small;font-style: oblique;">You are our premium member</p>
+            <button 
+              type="button" 
+              onclick="buyPremium()" 
+              id="premium" 
+              class="btn btn-danger btn-sm w-100 mt-3">
+              ⭐ Buy Premium Membership
+            </button>
+          </div>
+       
+          <ul class="nav nav-pills flex-column w-100">
+        
+            <li class="nav-item mb-2">
+              <button class="btn btn-dark  w-100 text-start" onclick="addExpense()">Add Income/Expense</button>
+            </li>
+            <li class="nav-item mb-2">
+              <button class="btn btn-dark  w-100 text-start" onclick="showExpense()">Expense Details</button>
+            </li>
+            <li class="nav-item mb-2">
+              <button class="btn btn-dark  w-100 text-start" onclick="downloadedFiles()">Downloaded Files</button>
+            </li>
+            <li class="nav-item mb-2">
+              <button id="leaderButton" class="btn btn-dark  w-100 text-start" onclick="showLeaderboard()" disabled>Leaderboard</button>
+            </li>
+            <br><br>
+            <li class="nav-item mb-2">
+                <button class="btn btn-dark  w-100 text-start" onclick="logout()">Log Out</button>
+              </li>
+            
+          </ul>
+        </nav>
+    </div>
+ 
+   <div class="container abc" id="expenseForm" >
+    <form onsubmit="handleSubmit(event)" class="form-control form">
+    <label for="type" class="form-label">Type</label>
+    <select id="type" class="form-control" onchange="toggleAmountField()">
+      <option value="">-- Select Type --</option>
+      <option value="income">Income</option>
+      <option value="expense">Expense</option>
+    </select>
+
+    <br>
+
+
+    <div id="incomeField" style="display: none;">
+      <label for="income" class="form-label">Income Amount</label>
+      <input type="number" class="form-control" id="income" name="income">
+    </div>
+
+ 
+    <div id="expenseField" style="display: none;">
+      <label for="expenseamount" class="form-label">Expense Amount</label>
+      <input type="number" class="form-control" id="expenseamount" name="expenseamount">
+    </div>
+
+      <br>
+        <label for="description" class="form-label">Description</label>
+        <textarea type="text" rows="5" cols="15"  class="form-control" id="description" name="description"></textarea>
+        <br>
+        <label for="category" class="form-label">Category</label>
+        <input type="text" class="form-control" id="category" name="category" placeholder="eg-Food">
+        <br>
+        
+        <div class="d-grid gap-2 col-10 mx-auto">
+        <button type="submit" class="btn btn-danger mt-3" id="btn">Add Income/Expense</button>
+        </div>
+    </form>
+   </div>
+
+   <div class="abc" id="showExpense">
+   
+    <h2 style="font-family: sans-serif; text-align: center;">Expenses & Income Dashboard</h2>
+   
+    <div style="display: flex; justify-content: center; gap: 20px; margin-top: 10px;">
+    <button type="button" class="btn btn-success" id="daily">Daily</button>
+    <button type="button" class="btn btn-success" id="weekly">Weekly</button>
+    <button type="button" class="btn btn-success" id="monthly">Monthly</button>
+    </div>
+    <table id="expenseTable" class="table table-striped table-bordered table-hover text-center align-middle mt-3">
+      <thead >
+        <tr>
+          <th class="bg-dark text-white">Date</th>
+          <th class="bg-dark text-white">Income</th>
+          <th class="bg-dark text-white">Expense Amount</th>
+          <th class="bg-dark text-white">Description</th>
+          <th class="bg-dark text-white">Category</th>
+          <th class="bg-dark text-white">Action</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="d-flex justify-content-between align-items-center mt-3">
+      <div>
+        <label for="rowsPerPage" class="form-label fw-bold">Rows per page:</label>
+        <select id="rowsPerPage" class="form-select" style="width: 80px; display:inline-block;"
+                onchange="changeRowsPerPage(this.value)">
+          <option value="5">5</option>
+          <option value="1" selected>1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+      <div id="pagination" class="d-flex gap-2"></div>
+    </div>
+    <div id="pagination" style="display: flex; justify-content: center;">
+        
+    </div>
+    <div style="display: flex; justify-content: flex-start; margin-top: 10px;">
+      <button type="button" class="btn btn-warning" id="report">Report Generate</button>
+      </div>
+   </div>
+   <div class="abc" id="showLeaderboard">
+    <div style ="display: flex; justify-content: center; margin-top: 20px;">
+      <h2 style="font-family: sans-serif; text-align: center;">Expense Leaderboard</h2>
+    </div>
+    <div id="ul_leader"></div>
+    </div>
+
+    <div class="abc" id="downloadedFiles">
+      <div style ="display: flex; justify-content: center; margin-top: 20px;">
+        <h2 style="font-family: sans-serif; text-align: center;">Downloaded Files</h2>
+      </div>
+      <div id="ul_files"></div>
+      
+   </div>
+    </div>
+
+    
+    
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+<script src="index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</html>

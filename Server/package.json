@@ -1,0 +1,29 @@
+{
+  "name": "expense_tracker_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@cashfreepayments/cashfree-js": "^1.0.5",
+    "@google/genai": "^1.22.0",
+    "aws-sdk": "^2.1692.0",
+    "bcrypt": "^6.0.0",
+    "cashfree-pg": "^5.0.8",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.1",
+    "sib-api-v3-sdk": "^8.5.0",
+    "uuid": "^13.0.0",
+    "mongodb": "^7.1.0",
+    "mongoose": "^9.2.0",
+    "nodemon": "^3.1.11"
+  }
+}
