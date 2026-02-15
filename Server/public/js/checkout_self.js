@@ -4,7 +4,7 @@ document.getElementById("renderBtn").addEventListener("click", async() => {
     });
     try{
         const token=localStorage.getItem("token");
-      const response=await axios.post("http://localhost:7000/pay",{},{ headers:{ "Authorization": token } })
+      const response=await axios.post("http://43.204.220.212/pay",{},{ headers:{ "Authorization": token } })
       const paymentSessionId=response.data.paymentSessionId;
        console.log(paymentSessionId);
     let checkoutOptions = {
@@ -20,12 +20,12 @@ catch(err)
 }
 });
 
-window.opener.postMessage("READY", "http://localhost:7000");
+window.opener.postMessage("READY", "http://43.204.220.212");
 
 window.addEventListener("message", (event) => {
   console.log("Message received from:", event.origin);
 
-  if (event.origin === "http://localhost:7000") {
+  if (event.origin === "http://43.204.220.212") {
     localStorage.setItem("token", event.data.token);
    
   }

@@ -1,4 +1,4 @@
-const backend_url="http://localhost:7000";
+const backend_url="http://43.204.220.212";
 
 function resetLink(event)
 {
